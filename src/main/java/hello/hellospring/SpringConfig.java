@@ -7,18 +7,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import service.MemberService;
 
-@Configuration
-    public class SpringConfig {
-    //멤버 서비스랑 , 멤버리포지토리를 스프링빈에 등록을하고
-    // 스프링빈에 등록된애들을 멤버리포지토리르르 멤버서비스에 넣어준다
+import javax.sql.DataSource;
 
+@Configuration
+//회원서비스와 회원리포지토리의 @service, @repository , @autowired 애노테이션을 제거하고 진행한다
+public class SpringConfig {
+
+    private final DataSource dataSource;
+    public SpringConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
         @Bean
         public MemberService memberService() {
-
             return new MemberService(memberRepository());
+
         }
         @Bean
         public MemberRepository memberRepository() {
+
             return new MemoryMemberRepository();
         }
 
